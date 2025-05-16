@@ -1,0 +1,99 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-center align-items-center flex-grow-0" style="height: 100px;">
+    <h1 class="mb-0" style="font-size: clamp(1.5rem, 4vw, 3rem);">
+      {{ isEditMode ? 'Edit Employee' : 'Add Employee' }}
+    </h1>
+  </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="fullName" class="form-label">Full Name</label>
+        <input
+          type="text"
+          id="fullName"
+          formControlName="fullName"
+          class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('fullName')?.touched && employeeForm.get('fullName')?.invalid}"
+        />
+        <div *ngIf="employeeForm.get('fullName')?.touched && employeeForm.get('fullName')?.invalid" class="invalid-feedback">
+          <div *ngIf="employeeForm.get('fullName')?.errors?.['required']">Full Name is required.</div>
+          <div *ngIf="employeeForm.get('fullName')?.errors?.['maxlength']">Maximum 100 characters allowed.</div>
+        </div>
+      </div>
+  
+      <!-- Repeat similar changes for all other form controls -->
+  
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('email')?.touched && employeeForm.get('email')?.invalid}"
+        />
+        <div *ngIf="employeeForm.get('email')?.touched && employeeForm.get('email')?.invalid" class="invalid-feedback">
+          <div *ngIf="employeeForm.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="employeeForm.get('email')?.errors?.['email']">Enter a valid email address.</div>
+          <div *ngIf="employeeForm.get('email')?.errors?.['maxlength']">Maximum 100 characters allowed.</div>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="jobTitle" class="form-label">Job Title</label>
+        <input
+          type="text"
+          id="jobTitle"
+          formControlName="jobTitle"
+          class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('jobTitle')?.touched && employeeForm.get('jobTitle')?.invalid}"
+        />
+        <div *ngIf="employeeForm.get('jobTitle')?.touched && employeeForm.get('jobTitle')?.invalid" class="invalid-feedback">
+          <div *ngIf="employeeForm.get('jobTitle')?.errors?.['required']">Job Title is required.</div>
+          <div *ngIf="employeeForm.get('jobTitle')?.errors?.['maxlength']">Maximum 100 characters allowed.</div>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="salary" class="form-label">Salary</label>
+        <input
+          type="number"
+          id="salary"
+          formControlName="salary"
+          class="form-control"
+          min="0"
+          step="0.01"
+          [ngClass]="{'is-invalid': employeeForm.get('salary')?.touched && employeeForm.get('salary')?.invalid}"
+        />
+        <div *ngIf="employeeForm.get('salary')?.touched && employeeForm.get('salary')?.invalid" class="invalid-feedback">
+          <div *ngIf="employeeForm.get('salary')?.errors?.['required']">Salary is required.</div>
+          <div *ngIf="employeeForm.get('salary')?.errors?.['min']">Salary cannot be negative.</div>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="hireDate" class="form-label">Hire Date</label>
+        <input
+          type="date"
+          id="hireDate"
+          formControlName="hireDate"
+          class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('hireDate')?.touched && employeeForm.get('hireDate')?.invalid}"
+        />
+        <div *ngIf="employeeForm.get('hireDate')?.touched && employeeForm.get('hireDate')?.invalid" class="invalid-feedback">
+          <div *ngIf="employeeForm.get('hireDate')?.errors?.['required']">Hire Date is required.</div>
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-success" [disabled]="employeeForm.invalid">
+        {{ isEditMode ? 'Update' : 'Add' }} Employee
+      </button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="router.navigate(['/employees'])">
+        Cancel
+      </button>
+    </form>
+  </div>
+  

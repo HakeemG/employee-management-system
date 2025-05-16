@@ -1,0 +1,64 @@
+<div class="container-fluid vh-100 d-flex flex-column p-3" style="max-width: 100vw;">
+    <div class="d-flex justify-content-center align-items-center flex-grow-0" style="height: 100px;">
+      <h1 class="mb-0" style="font-size: clamp(1.5rem, 4vw, 3rem);">
+        Employee List 👥
+      </h1>
+    </div>
+  
+    <div *ngIf="loading" class="text-center" style="flex: 1;">Loading employees...</div>
+    <div *ngIf="errorMessage" class="alert alert-danger text-center" style="flex: 1;">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Show message if no employees -->
+    <div *ngIf="!loading && employees.length === 0 && !errorMessage" class="text-center my-3 text-muted">
+        No employees found.
+    </div>
+
+    <!-- Always show this button unless loading -->
+    <div *ngIf="!loading" class="d-flex justify-content-center my-3">
+        <button
+            class="btn btn-primary"
+            (click)="addEmployee()"
+            style="font-size: clamp(1rem, 2.5vw, 1.5rem);"
+        >
+            Add Employee
+        </button>
+    </div>
+  
+    <div class="table-responsive" style="flex: 1; overflow-y: auto; max-height: 100%; position: relative;">
+      <table
+        *ngIf="!loading && employees.length > 0"
+        class="table table-striped table-bordered w-100"
+        style="font-size: clamp(0.8rem, 2vw, 1.2rem); min-width: 100%;"
+      >
+        <thead class="table-dark table-bordered align-middle bg-dark"
+        style="font-size: clamp(0.9rem, 2.5vw, 1.4rem); position: sticky; top: 0; z-index: 10;">
+          <tr>
+            <th class="text-center align-middle">ID</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Job Title</th>
+            <th>Salary</th>
+            <th>Hire Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let emp of employees" class="align-middle" style="font-size: clamp(0.8rem, 2vw, 1.2rem);">
+            <td class="text-center align-middle">{{ emp.employeeID }}</td>
+            <td class="text-center align-middle">{{ emp.fullName }}</td>
+            <td class="text-center align-middle">{{ emp.email }}</td>
+            <td class="text-center align-middle">{{ emp.jobTitle }}</td>
+            <td class="text-center align-middle">{{ emp.salary | currency }}</td>
+            <td class="text-center align-middle">{{ emp.hireDate | date: 'mediumDate' }}</td>
+            <td class="text-center align-middle">
+              <button class="btn btn-sm btn-info me-2" (click)="editEmployee(emp.employeeID)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteEmployee(emp.employeeID)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
