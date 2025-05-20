@@ -18,12 +18,16 @@
     <!-- Always show this button unless loading -->
     <div *ngIf="!loading" class="d-flex justify-content-center my-3">
         <button
-            class="btn btn-primary"
+            class="btn btn-primary me-3"
             (click)="addEmployee()"
             style="font-size: clamp(1rem, 2.5vw, 1.5rem);"
         >
             Add Employee
         </button>
+        <button 
+            (click)="logout()"
+            class="btn btn-danger float-end" 
+            style="font-size: clamp(1rem, 2.5vw, 1.5rem);">Logout</button>
     </div>
   
     <div class="table-responsive" style="flex: 1; overflow-y: auto; max-height: 100%; position: relative;">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee, EmployeeService } from '../../services/employee.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +14,7 @@ export class EmployeeListComponent implements OnInit {
   loading = false;
   errorMessage = '';
 
-  constructor(private employeeService: EmployeeService, private router: Router) {}
+  constructor(private authService: AuthService, private employeeService: EmployeeService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadEmployees();
@@ -48,6 +49,10 @@ export class EmployeeListComponent implements OnInit {
         error: () => alert('Delete failed.')
       });
     }
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
 }
